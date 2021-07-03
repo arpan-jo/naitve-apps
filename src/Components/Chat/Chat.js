@@ -4,15 +4,14 @@ import {
   Image,
   Text,
   FlatList,
-  SafeAreaView,
   TouchableOpacity,
   TextInput,
+  StyleSheet,
 } from 'react-native';
 import {payload} from '../../FakeData/FakeData';
 import shortid from 'shortid';
 import moment from 'moment';
 import Icon from 'react-native-vector-icons/FontAwesome';
-import {} from 'react';
 
 export default function Chat() {
   const [byName, setByName] = useState('');
@@ -21,36 +20,26 @@ export default function Chat() {
 
   useEffect(() => {
     setData(payload);
-  }, []);
-  // will implement search
-  console.log(data);
+  }, [payload]);
+
+  const searchResult = data.filter(user =>
+    user?.name?.toLowerCase().includes(byName?.toLowerCase()),
+  );
 
   return (
-    <View style={{paddingHorizontal: 15}}>
+    <View style={styles.mainVeiw}>
       <View>
-        <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
-          <View
-            style={{
-              flexDirection: 'row',
-              alignItems: 'center',
-            }}>
+        <View style={styles.headerView}>
+          <View style={styles.chatView}>
             <Image
               source={{
                 uri: 'https://images.unsplash.com/photo-1591258739299-5b65d5cbb235?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=334&q=80',
               }}
-              style={{
-                width: 60,
-                height: 60,
-                borderRadius: 50,
-              }}
+              style={styles.chatHeaderImg}
             />
-            <Text style={{fontSize: 40, paddingHorizontal: 10}}>Chats</Text>
+            <Text style={styles.chatText}>Chats</Text>
           </View>
-          <View
-            style={{
-              flexDirection: 'row',
-              alignItems: 'center',
-            }}>
+          <View style={styles.icons}>
             <Icon name="camera" size={30} color="black" />
             <Icon
               name="pencil"
@@ -61,16 +50,12 @@ export default function Chat() {
           </View>
         </View>
         <View>
-          <View
-            style={{
-              backgroundColor: '#EFF0F1',
-              borderRadius: 20,
-              marginTop: 10,
-            }}>
+          <View style={styles.textInput}>
+            <Icon name="search" size={20} color="gray" />
             <TextInput
               placeholder="Search"
               value={byName}
-              onChangeText={t => setByName(t)}
+              onChangeText={name => setByName(name)}
             />
           </View>
         </View>
@@ -78,21 +63,12 @@ export default function Chat() {
 
       <View>
         <FlatList
+          showsVerticalScrollIndicator={false}
           vertical={true}
-          data={data}
+          data={searchResult}
           renderItem={({item, index}) => (
-            <View
-              style={{
-                flexDirection: 'row',
-                justifyContent: 'space-between',
-                alignItems: 'center',
-              }}>
-              <View
-                style={{
-                  flexDirection: 'row',
-                  marginVertical: 10,
-                  alignItems: 'center',
-                }}>
+            <View style={styles.flatListMain}>
+              <View style={styles.flatListImgPart}>
                 <TouchableOpacity onPress={() => alert('clciked')}>
                   <Image
                     source={{
@@ -118,18 +94,13 @@ export default function Chat() {
             </View>
           )}
           ListHeaderComponent={
-            <View style={{flexDirection: 'row', alignItems: 'center'}}>
+            <View style={styles.listHeaderMain}>
               <FlatList
                 showsHorizontalScrollIndicator={false}
                 horizontal={true}
-                data={payload}
+                data={searchResult}
                 renderItem={({item, index}) => (
-                  <View
-                    style={{
-                      width: 90,
-                      marginVertical: 10,
-                      alignItems: 'center',
-                    }}>
+                  <View style={styles.listHeaderImgPart}>
                     <Image
                       source={{
                         uri: `${item?.profileImg}`,
@@ -152,3 +123,57 @@ export default function Chat() {
     </View>
   );
 }
+
+const styles = StyleSheet.create({
+  mainVeiw: {
+    paddingHorizontal: 15,
+  },
+  headerView: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+  },
+  chatView: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  chatHeaderImg: {
+    width: 60,
+    height: 60,
+    borderRadius: 50,
+  },
+  chatText: {
+    fontSize: 40,
+    paddingHorizontal: 10,
+  },
+  icons: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  textInput: {
+    backgroundColor: '#EFF0F1',
+    borderRadius: 20,
+    marginTop: 10,
+    paddingLeft: 10,
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  flatListMain: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+  },
+  flatListImgPart: {
+    flexDirection: 'row',
+    marginVertical: 10,
+    alignItems: 'center',
+  },
+  listHeaderMain: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  listHeaderImgPart: {
+    width: 90,
+    marginVertical: 10,
+    alignItems: 'center',
+  },
+});
