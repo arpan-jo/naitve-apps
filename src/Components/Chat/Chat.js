@@ -61,7 +61,7 @@ export default function Chat() {
         </View>
       </View>
 
-      <View>
+      <View style={{flex: 1}}>
         <FlatList
           showsVerticalScrollIndicator={false}
           vertical={true}
@@ -99,6 +99,7 @@ export default function Chat() {
                 showsHorizontalScrollIndicator={false}
                 horizontal={true}
                 data={searchResult}
+                ItemSeparatorComponent={() => <View style={{width: 30}}></View>}
                 renderItem={({item, index}) => (
                   <View style={styles.listHeaderImgPart}>
                     <Image
@@ -126,6 +127,7 @@ export default function Chat() {
 
 const styles = StyleSheet.create({
   mainVeiw: {
+    flex: 1,
     paddingHorizontal: 15,
   },
   headerView: {
@@ -175,5 +177,7 @@ const styles = StyleSheet.create({
     width: 90,
     marginVertical: 10,
     alignItems: 'center',
+    backgroundColor: 'red',
+    // marginHorizontal: 20,
   },
 });
