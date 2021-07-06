@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {
   StyleSheet,
   Text,
@@ -9,7 +9,8 @@ import {
 } from 'react-native';
 import Icon from 'react-native-vector-icons/Feather';
 
-const LogIn = () => {
+const LogIn = ({navigation}) => {
+  const [email, setEmail] = useState('');
   return (
     <View style={styles.main}>
       {/* header image section*/}
@@ -28,7 +29,11 @@ const LogIn = () => {
           <Text style={{paddingTop: 5}}>Email Address</Text>
           <View style={styles.email}>
             <Icon name="mail" size={20} color="black" />
-            <TextInput placeholder="Username@gmail.com" />
+            <TextInput
+              placeholder="Username@gmail.com"
+              value={email}
+              onChangeText={eml => setEmail(eml)}
+            />
           </View>
         </View>
       </View>
@@ -48,7 +53,18 @@ const LogIn = () => {
       </View>
 
       {/* login button section */}
-      <TouchableOpacity style={styles.buttonViewView}>
+      <TouchableOpacity
+        style={styles.buttonViewView}
+        onPress={() => {
+          setEmail('');
+          navigation.navigate(
+            'User',
+
+            // , {
+            //   email: email,
+            // }
+          );
+        }}>
         <View style={styles.button}>
           <Text style={{color: 'white'}}>LogIn</Text>
         </View>
@@ -68,7 +84,7 @@ export default LogIn;
 const styles = StyleSheet.create({
   main: {
     flex: 1,
-    marginHorizontal: 20,
+    paddingHorizontal: 20,
     backgroundColor: '#F3F8FE',
   },
   headerImgView: {

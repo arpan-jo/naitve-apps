@@ -1,15 +1,23 @@
 import React from 'react';
-import {StyleSheet, Text, View, Image} from 'react-native';
+import {
+  StyleSheet,
+  Text,
+  View,
+  Image,
+  SafeAreaView,
+  ScrollView,
+} from 'react-native';
 import Icon from 'react-native-vector-icons/AntDesign';
 import IconPay from 'react-native-vector-icons/MaterialIcons';
 import IconDolar from 'react-native-vector-icons/FontAwesome';
 
-const User = () => {
+const User = ({route, navigation}) => {
+  // const {email} = route.params;
   const date = new Date().toDateString();
 
   return (
     <View style={styles.mainView}>
-      <View style={{flex: 1}}>
+      <ScrollView style={{flex: 1}} showsVerticalScrollIndicator={false}>
         {/* image section */}
         <View style={styles.imageSection}>
           <View style={styles.headerIcons}>
@@ -25,6 +33,7 @@ const User = () => {
             />
             <Text style={styles.name}>Hira Riaz</Text>
             <Text>UX/UI Designer</Text>
+            {/* <Text>{email}</Text> */}
           </View>
           <View style={styles.priceSection}>
             <View>
@@ -126,20 +135,25 @@ const User = () => {
             </View>
           </View>
         </View>
-      </View>
+      </ScrollView>
 
       {/* footer section */}
-      <View>
-        <View style={styles.footer}>
-          <Icon name="home" size={40} color="black" />
-          <IconPay name="payment" size={40} color="black" />
-          <View style={styles.plusIcon}>
-            <Icon name="plus" size={20} color="white" />
-          </View>
-          <Text style={{fontSize: 35}}>$</Text>
-          <Icon name="user" size={30} color="black" />
+      {/* <View> */}
+      <View style={styles.footer}>
+        <Icon name="home" size={40} color="black" />
+        <IconPay
+          name="payment"
+          size={40}
+          color="black"
+          onPress={() => navigation.navigate('Payment')}
+        />
+        <View style={styles.plusIcon}>
+          <Icon name="plus" size={20} color="white" />
         </View>
+        <Text style={{fontSize: 35}}>$</Text>
+        <Icon name="user" size={30} color="black" />
       </View>
+      {/* </View> */}
     </View>
   );
 };
