@@ -1,19 +1,13 @@
 import React from 'react';
-import Task from './src/Components/Test/Test';
-import TestTwo from './src/Components/TestTwo/TestTwo';
-import ToDo from './src/Components/Todo/ToDo';
-import Chat from './src/Components/Chat/Chat';
 import Navigation from './src/Components/Navigation/Navigation';
+import {Provider} from 'react-redux';
+import {store} from './src/store/store';
 
 const App = () => {
   return (
-    <>
-      {/* <Task /> */}
-      {/* <TestTwo /> */}
-      {/* <ToDo /> */}
-      {/* <Chat /> */}
+    <Provider store={store}>
       <Navigation />
-    </>
+    </Provider>
   );
 };
 
